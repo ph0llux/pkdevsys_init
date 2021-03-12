@@ -1,8 +1,6 @@
 ##########################################################################
-# ph0llux:d8b2a5ccb2870218cdd04fc912ebcf472a85d74b62ea2bf432c19f81d53582f0
+# ph0llux:d1d89d630ae7eab1e1a778a76b322b4200896f0f1b53023aba71ffeff908f4f0
 ##########################################################################
-##########zshrc##############
-#pk:d13741c5c11d0678c30aa53923dc70ef034019f17de2daac85dd5f98c51a84cc
 # written and published by plitc (2013)
 # heavily modified by ph0llux (2018)
 

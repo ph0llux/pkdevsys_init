@@ -1,5 +1,5 @@
 /*************************************************************************
-* ph0llux:adfac33bb80e019e7665ca3d3fdf1488327dcea556360880c84f40a9595b061f
+* ph0llux:2d20de05692c3f655c987e875fd4a0617e62832e3432f40479127f448b2cbe44
 *************************************************************************/
 use super::*;
 
@@ -12,6 +12,15 @@ impl<T> CustomErrorTrait<T> for Result<T, TomlError> {
 		match self {
 			Ok(x) => Ok(x),
 			Err(err) => Err(CustomError::ReadToml(err))
+		}
+	}
+}
+
+impl<T> CustomErrorTrait<T> for Result<T, TomlSerError> {
+	fn to_ce(self) -> Result<T, CustomError> {
+		match self {
+			Ok(x) => Ok(x),
+			Err(err) => Err(CustomError::WriteToml(err))
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*************************************************************************
-* ph0llux:c64842cc079a6b9c5538353b68d9b1e74a8a73983b5da2c4b21231e1b69e7179
+* ph0llux:84b72cec0ca2e2caf5e3746bc4d90efb2ca6e303d8d08c3e4db1aaecd2f3eced
 *************************************************************************/
 #![forbid(unsafe_code)] // unsafe is forbidden
 #![cfg_attr(test, deny(warnings))] // deny warnings
@@ -8,8 +8,9 @@ use std::io;
 use std::fs;
 
 // - external
-use serde::{Deserialize};
+use serde::{Deserialize, Serialize};
 use toml::de::Error as TomlError;
+use toml::ser::Error as TomlSerError;
 
 // - internal
 use crate::traits::CustomErrorTrait;
@@ -17,7 +18,7 @@ use crate::traits::CustomErrorTrait;
 // - modules
 pub mod traits;
 
-#[derive(Deserialize,Clone)]
+#[derive(Serialize,Deserialize,Clone)]
 pub struct Config {
     pub general: SubconfigGeneral,
     pub syntax_c: SubconfigSyntaxC,
@@ -52,19 +53,19 @@ impl Config {
 	}
 }
 
-#[derive(Deserialize,Clone)]
+#[derive(Serialize,Deserialize,Clone)]
 pub struct SubconfigGeneral {
 	pub author: String,
 	pub email: String,
 	pub sign_key: String,
 }
 
-#[derive(Deserialize,Clone)]
+#[derive(Serialize,Deserialize,Clone)]
 pub struct SubconfigSyntaxC {
 	pub file_extensions: Vec<String>,
 }
 
-#[derive(Deserialize,Clone)]
+#[derive(Serialize,Deserialize,Clone)]
 pub struct SubconfigSyntaxHashtag {
 	pub file_extensions: Vec<String>,
 }
@@ -82,6 +83,7 @@ pub enum CustomError {
 	ReadConfig(io::Error),
 	ReadFile(io::Error),
 	ReadToml(TomlError),
+	WriteToml(TomlSerError),
 	Filetype,
 	OptionNone
 }

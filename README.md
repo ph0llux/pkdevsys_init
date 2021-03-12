@@ -1,8 +1,7 @@
+# pkdevsys
+
+This repo provides some tools and config file, which are used by me on my development systems.
+
 # Todo
 
-- Default "cargo new"
-- Default cargo config file
-- verifyCode
-- zshrc-install
-- rustup install (incl. nightly)
-- install necessary tools: git, xmodmap, zsh
+- verifyCode-tool
