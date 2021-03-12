@@ -1,5 +1,5 @@
 ##########################################################################
-# ph0llux:d1d89d630ae7eab1e1a778a76b322b4200896f0f1b53023aba71ffeff908f4f0
+# ph0llux:8e22c6da6e04aaa1dc9f89490ad3f539fcc1f0d42dca7f17c9898fc6365e90fc
 ##########################################################################
 # written and published by plitc (2013)
 # heavily modified by ph0llux (2018)
@@ -126,7 +126,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias kedpm='kedpm -c'
 alias history='fc -ldErn -$HISTSIZE'
-alias ls='ls'
+alias ls='ls --color'
 
 #git
 alias gp='git-prepare'
