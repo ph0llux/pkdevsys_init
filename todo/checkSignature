@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# You should set the SIGN_KEY Var with your personal sign key (could be any string)
+# SIGN_KEY="12345"
+
+#Vars
+#Valid for all filetypes which uses the C-comment sytnax (e.g. "//this is a comment", or "/** commentline **/") 
+FILENAME="$1"
+OWNER_LINE_SYNTAX_C="* pk:"
+FILETYPES_SYNTAX_C=".rs .cpp"
+
+#Code files with C comment syntax style
+check_signature_c_syntax_code_files() {
+	CONTENT=$(cat "$FILENAME" | grep -v "^* pk:")
+	CONTENT=$CONTENT$SIGN_KEY
+	SIGNATURE=$(echo $CONTENT | sha256sum | cut -d " " -f1)
+	SIGNATURE_IN_FILE=$(cat "$FILENAME" | grep "^* pk:" | cut -d ":" -f2)
+	echo "$SIGNATURE : $SIGNATURE_IN_FILE" 
+	if [[ "$SIGNATURE" == "$SIGNATURE_IN_FILE" ]]; then
+		echo "$FILENAME: Signature is valid."
+	else
+		echo "$FILENAME: Signature is not valid."
+	fi
+}
+
+for FILETYPE in $FILETYPES_SYNTAX_C; do
+	if [[ "$FILENAME" == *"$FILETYPE" ]]; then
+		check_signature_c_syntax_code_files
+	fi
+done;

@@ -1,13 +1,14 @@
+/*************************************************************************
+* ph0llux:a133128113ae011dc305e9c65c0e5a00776f128f627b3f71da18e744e5b9db87
+*************************************************************************/
 // - STD
 use std::io::Write;
 use std::fs;
-use std::env;
-
 
 // - internal
 use pkdevsys_tools;
 use pkdevsys_tools::{CustomError, Filetype, get_config, Config};
-use pkdevsys_tools::traits::{CustomErrorTrait, StringExtensions};
+use pkdevsys_tools::traits::{CustomErrorTrait};
 
 // - external
 use phollaits::{StringExt,HashExt};
@@ -35,17 +36,11 @@ fn get_filecontent<S: Into<String>>(filename: S) -> Result<String, CustomError> 
 	}
 }
 
-fn main() -> Result<(), CustomError>{
-	let args: Vec<String> = env::args().collect();
-	if args.len() > 2 {
-		return Err(CustomError::Arguments(pkdevsys_tools::ERROR_TOO_MANY_ARGUMENTS.to_string()));
-	} else if args.len() <= 1 {
-		return Err(CustomError::Arguments(pkdevsys_tools::ERROR_TOO_FEW_ARGUMENTS.to_string()));
-	}
-	let filename = &args[1];
+pub fn code_sign<S: Into<String>>(filename: S) -> Result<String, CustomError>{
+	let filename = filename.into();
 	let config = get_config(pkdevsys_tools::PATH_TO_CONFIG_FILE.to_string().shellexpand())?;
-	let filetype = get_filetype(filename, &config)?;
-	let filecontent = get_filecontent(filename)?;
+	let filetype = get_filetype(&filename, &config)?;
+	let filecontent = get_filecontent(&filename)?;
 
 	let owner_comment_line = {
 		let mut comment_line = None;
@@ -117,7 +112,7 @@ fn main() -> Result<(), CustomError>{
 					new_content.push_str(pkdevsys_tools::SEPARATOR_NEWLINE);
 				}		
 			} else {
-				new_content.push_str(&config.get_full_comment_line(&filetype, hash));
+				new_content.push_str(&config.get_full_comment_line(&filetype, &hash));
 				new_content.push_str(&filecontent);
 			}	
 		},
@@ -133,7 +128,7 @@ fn main() -> Result<(), CustomError>{
 					new_content.push_str(pkdevsys_tools::SEPARATOR_NEWLINE);
 				}
 			} else {
-				new_content.push_str(&config.get_full_comment_line(&filetype, hash));
+				new_content.push_str(&config.get_full_comment_line(&filetype, &hash));
 				for line in filecontent.lines().skip(3) {
 					new_content.push_str(&line);
 					new_content.push_str(pkdevsys_tools::SEPARATOR_NEWLINE);
@@ -143,5 +138,5 @@ fn main() -> Result<(), CustomError>{
 	}
 	let mut file = fs::File::create(filename).to_ce()?;
 	file.write_all(new_content.trim_newline_end().as_bytes()).to_ce()?;
-	Ok(())
+	Ok(hash)
 }

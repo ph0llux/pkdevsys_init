@@ -1,3 +1,6 @@
+##########################################################################
+# ph0llux:2ea2e62a42de4f454f8e95c1dea687e9da6a2ffa1708b253d81c4a91165d44a6
+##########################################################################
 #cargo-features = ["strip"] # needed to strip the symbol table (rust nightly is needed) for size optimizations.
 
 [package]
@@ -18,7 +21,13 @@ crate-type = ["lib"]   	# The crate types to generate.
 
 [[bin]]
 name = "code_sign"
-path = "src/bin/code_sign.rs"
+path = "src/bin/code_sign/main.rs"
+test = true
+bench = true
+
+[[bin]]
+name = "folder_code_sign"
+path = "src/bin/folder_code_sign.rs"
 test = true
 bench = true
 
@@ -33,4 +42,5 @@ codegen-units = 1		# Set to 1 to allow for maximum size reduction optimizations 
 [dependencies]
 toml = "0.5.8"
 serde = { version = "1.0.124", features = [ "derive" ]}
-phollaits = "0.2.4"
+phollaits = "0.2.5"
+walkdir = "2.0.0"

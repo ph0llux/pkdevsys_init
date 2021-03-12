@@ -1,3 +1,6 @@
+/*************************************************************************
+* ph0llux:adfac33bb80e019e7665ca3d3fdf1488327dcea556360880c84f40a9595b061f
+*************************************************************************/
 use super::*;
 
 pub trait CustomErrorTrait<T> {
@@ -28,25 +31,5 @@ impl<T> CustomErrorTrait<T> for Option<T> {
 			Some(x) => Ok(x),
 			None => Err(CustomError::OptionNone)
 		}
-	}
-}
-
-pub trait StringExtensions {
-	fn trim_newline_end(&self) -> String;
-}
-
-impl StringExtensions for String {
-	fn trim_newline_end(&self) -> String {
-		let mut trimmed_string = self.clone();
-		loop {
-			if trimmed_string.ends_with('\n') {
-				trimmed_string.pop();
-			} else if trimmed_string.ends_with('\r') {
-				trimmed_string.pop();
-			} else {
-				break;
-			}
-		}
-	    String::from(trimmed_string)
 	}
 }

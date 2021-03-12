@@ -1,3 +1,8 @@
+/*************************************************************************
+* ph0llux:c64842cc079a6b9c5538353b68d9b1e74a8a73983b5da2c4b21231e1b69e7179
+*************************************************************************/
+#![forbid(unsafe_code)] // unsafe is forbidden
+#![cfg_attr(test, deny(warnings))] // deny warnings
 // - STD
 use std::io;
 use std::fs;
@@ -27,7 +32,8 @@ impl Config {
 		};
 		generic_line.replace(VAR_OWNER, &self.general.author)
 	}
-	pub fn get_full_comment_line(&self, filetype: &Filetype, key: String) -> String {
+	pub fn get_full_comment_line<S: Into<String>>(&self, filetype: &Filetype, key: S) -> String {
+		let key = key.into();
 		let mut comment_line = String::new();
 		match filetype {
 			Filetype::SyntaxC => comment_line.push_str(C_SYNTAX_COMMENT_LINE_START),
@@ -91,13 +97,13 @@ pub fn get_config<S: Into<String>>(path_to_config: S) -> Result<Config, CustomEr
 }
 
 //C or Rust syntax styled comment styles
-pub const C_SYNTAX_COMMENT_LINE_START: &'static str = "/************************************************************************";
-pub const C_SYNTAX_COMMENT_LINE_END: &'static str = "************************************************************************/";
+pub const C_SYNTAX_COMMENT_LINE_START: &'static str = "/*************************************************************************";
+pub const C_SYNTAX_COMMENT_LINE_END: &'static str = "*************************************************************************/";
 pub const C_SYNTAX_COMMENT_OWNER_LINE: &'static str = "* $OWNER:";
 
 //Hashtag syntax styled comment styles
-pub const HASHTAG_SYNTAX_COMMENT_LINE_START: &'static str = "#########################################################################";
-pub const HASHTAG_SYNTAX_COMMENT_LINE_END: &'static str = "#########################################################################";
+pub const HASHTAG_SYNTAX_COMMENT_LINE_START: &'static str = "##########################################################################";
+pub const HASHTAG_SYNTAX_COMMENT_LINE_END: &'static str = "##########################################################################";
 pub const HASHTAG_SYNTAX_COMMENT_OWNER_LINE: &'static str = "# $OWNER:";
 pub const HASHTAG_SYNTAX_SHEBANG_STARTLINE: &'static str = "#!";
 
@@ -107,10 +113,15 @@ pub const ERROR_TOO_MANY_ARGUMENTS: &'static str = "Too many arguments";
 pub const ERROR_TOO_FEW_ARGUMENTS: &'static str = "Too few arguments";
 
 //Help messages
-pub const HELP_USAGE: &'static str = "
+pub const HELP_USAGE_CODE_SIGN: &'static str = "
 usage:
 	./code_sign <path/to/codefile.rs>
 ";
+pub const HELP_USAGE_FOLDER_CODE_SIGN: &'static str = "
+usage:
+	./folder_code_sign <path/to/codefiles/>
+";
+
 
 //SEPARATORS
 pub const SEPARATOR_POINT: char = '.';
