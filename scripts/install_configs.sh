@@ -1,7 +1,7 @@
 #!/bin/bash
-# ph0llux:2838783c908094bbb0ebf78c7f04856db8f6fe9a9fea8f5b23ed9cfde26518ca
+# ph0llux:204916dad984b4afea176b77cb678a4dd4bdc865e8d58b209acd89e9a90cfb4a
 PKDEVSYS_CONFIG="./configs/pkdevsys_config.toml"
-ZSHRC="./configs/zshrc.sh"
+ZSHRC="./configs/zshrc"
 
 mkdir -p "$HOME/.config"
 cp -v "$PKDEVSYS_CONFIG" "$HOME/.config/pkdevsys_config.toml"
