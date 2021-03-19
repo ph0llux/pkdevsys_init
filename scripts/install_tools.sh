@@ -1,5 +1,5 @@
 #!/bin/bash
-# ph0llux:31f39b07f18ec55db1b6fdcbf02bb3e6bb5e1c2970a4c055c5c826654e0d9990
+# ph0llux:5abff48bb3feffa8563ecaa38ecd1c3062647e56357cb2753f068554a2d39b9d
 
 # install rustup
 install_rustup() {
@@ -7,6 +7,13 @@ install_rustup() {
 	chmod +x /tmp/rustup.sh
 	/tmp/rustup.sh -y
 	rustup toolchain install nightly #install nightly toolchain
+}
+
+install_cool_stuff() {
+	cargo install hexyl
+	cargo install fd-find
+	cargo install hyperfine
+	cargo install diskus
 }
 
 install_rustup

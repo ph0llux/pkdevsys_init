@@ -1,5 +1,5 @@
 /*************************************************************************
-* ph0llux:84b72cec0ca2e2caf5e3746bc4d90efb2ca6e303d8d08c3e4db1aaecd2f3eced
+* ph0llux:db0190a178b3d45251242b5baf2279f40bc4e24ca124c2027699feafc620843a
 *************************************************************************/
 #![forbid(unsafe_code)] // unsafe is forbidden
 #![cfg_attr(test, deny(warnings))] // deny warnings
@@ -98,6 +98,29 @@ pub fn get_config<S: Into<String>>(path_to_config: S) -> Result<Config, CustomEr
 	Ok(config)
 }
 
+pub fn get_filetype<S: Into<String>>(filename: S, config: &Config) -> Result<Filetype, CustomError> {
+	let filename = filename.into();
+	let mut split = filename.rsplit(SEPARATOR_POINT);
+	let fileextension = match split.next() {
+		Some(x) => x,
+		None => return Err(CustomError::Filetype)
+	};
+	if config.syntax_c.file_extensions.contains(&fileextension.to_string()) {
+		return Ok(Filetype::SyntaxC)
+	} else if config.syntax_hashtag.file_extensions.contains(&fileextension.to_string()) {
+		return Ok(Filetype::SyntaxHashtag)
+	} else {
+		return Err(CustomError::Filetype)
+	}
+}
+
+pub fn get_filecontent<S: Into<String>>(filename: S) -> Result<String, CustomError> {
+	match fs::read_to_string(filename.into()) {
+		Ok(x) => Ok(x),
+		Err(err) => Err(CustomError::ReadFile(err)),
+	}
+}
+
 //C or Rust syntax styled comment styles
 pub const C_SYNTAX_COMMENT_LINE_START: &'static str = "/*************************************************************************";
 pub const C_SYNTAX_COMMENT_LINE_END: &'static str = "*************************************************************************/";
@@ -122,6 +145,11 @@ usage:
 pub const HELP_USAGE_FOLDER_CODE_SIGN: &'static str = "
 usage:
 	./folder_code_sign <path/to/codefiles/>
+";
+//Help messages
+pub const HELP_USAGE_CHECK_SIGNATURE: &'static str = "
+usage:
+	./check_signature <path/to/codefile.rs>
 ";
 
 

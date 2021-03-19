@@ -1,5 +1,5 @@
 #!/bin/bash
-# ph0llux:55d72eaa37ab19a63e846c1f3562581e06f840938f766028ef3c4c3ea8a11cb5
+# ph0llux:356bfc895cc24a33d4cc7ad101d99bb5cd95e75e98f9e5665b99bf7a80595800
 
 #Vars, you could change!
 AUTHOR="ph0llux" #name of the author (mostly used: nicknames or firstnames)

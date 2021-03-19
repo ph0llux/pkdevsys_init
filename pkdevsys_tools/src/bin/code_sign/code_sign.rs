@@ -1,5 +1,5 @@
 /*************************************************************************
-* ph0llux:e84d790fdc371d03e807d146538ffdc90e9e1091e174f18097b3557609a5e5f3
+* ph0llux:1dd06ff9c5334caf51e859acf1c91ea04ac05b18bdb27050bf287428f2c7de86
 *************************************************************************/
 // - STD
 use std::io::Write;
@@ -7,40 +7,17 @@ use std::fs;
 
 // - internal
 use pkdevsys_tools;
-use pkdevsys_tools::{CustomError, Filetype, get_config, Config};
+use pkdevsys_tools::{CustomError, get_config};
 use pkdevsys_tools::traits::{CustomErrorTrait};
 
 // - external
 use phollaits::{StringExt,HashExt};
 
-fn get_filetype<S: Into<String>>(filename: S, config: &Config) -> Result<Filetype, CustomError> {
-	let filename = filename.into();
-	let mut split = filename.rsplit(pkdevsys_tools::SEPARATOR_POINT);
-	let fileextension = match split.next() {
-		Some(x) => x,
-		None => return Err(CustomError::Filetype)
-	};
-	if config.syntax_c.file_extensions.contains(&fileextension.to_string()) {
-		return Ok(Filetype::SyntaxC)
-	} else if config.syntax_hashtag.file_extensions.contains(&fileextension.to_string()) {
-		return Ok(Filetype::SyntaxHashtag)
-	} else {
-		return Err(CustomError::Filetype)
-	}
-}
-
-fn get_filecontent<S: Into<String>>(filename: S) -> Result<String, CustomError> {
-	match fs::read_to_string(filename.into()) {
-		Ok(x) => Ok(x),
-		Err(err) => Err(CustomError::ReadFile(err)),
-	}
-}
-
 pub fn code_sign<S: Into<String>>(filename: S) -> Result<String, CustomError>{
 	let filename = filename.into();
 	let config = get_config(pkdevsys_tools::PATH_TO_CONFIG_FILE.to_string().shellexpand())?;
-	let filetype = get_filetype(&filename, &config)?;
-	let filecontent = get_filecontent(&filename)?;
+	let filetype = pkdevsys_tools::get_filetype(&filename, &config)?;
+	let filecontent = pkdevsys_tools::get_filecontent(&filename)?;
 
 	let owner_comment_line = {
 		let mut comment_line = None;

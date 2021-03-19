@@ -1,5 +1,5 @@
 ##########################################################################
-# ph0llux:2b9a035699b4c01e12aaf2360c6ecbb5d6361ee7481a026b738217128cbf4a34
+# ph0llux:42330a584fde2068cb3217b0f33d5f3255e19e63ecc2ee397317aa534a33900a
 ##########################################################################
 [alias]     # command aliases
 b = "build"
@@ -10,9 +10,3 @@ rr = "run --release"
 
 [build]
 target-dir = "/tmp/cargo/targets"	# path of where to place all generated artifacts
-
-[term]
-verbose = true        # whether cargo provides verbose output
-color = 'auto'         # whether cargo colorizes output
-progress.when = 'auto' # whether cargo shows progress bar
-progress.width = 80    # width of progress bar

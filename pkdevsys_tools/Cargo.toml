@@ -1,5 +1,5 @@
 ##########################################################################
-# ph0llux:a8ec7386ff1c9581f1f1560b02d53888b81843f3abd1b381629333a19662e6bf
+# ph0llux:c6240d74b3bcd60d8e6c879213ba85b683a48c5396552fe10dcf3a815955269f
 ##########################################################################
 #cargo-features = ["strip"] # needed to strip the symbol table (rust nightly is needed) for size optimizations.
 
@@ -28,6 +28,12 @@ bench = true
 [[bin]]
 name = "folder_code_sign"
 path = "src/bin/folder_code_sign.rs"
+test = true
+bench = true
+
+[[bin]]
+name = "check_signature"
+path = "src/bin/check_signature.rs"
 test = true
 bench = true
 

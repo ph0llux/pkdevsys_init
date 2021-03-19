@@ -1,5 +1,5 @@
 #!/bin/bash
-# ph0llux:e5daafc0921097c940f81f79d4dfb643b522a1a44edfd453198f6b2bfc79f19e
+# ph0llux:8e7a405d0556039a460d12d197a16ad8facddddc6e0bdb321a319b930af92c89
 
 GIT_REPO_PATH="$(git rev-parse --show-toplevel)"
 CURRENT_DIR="$(pwd)"
